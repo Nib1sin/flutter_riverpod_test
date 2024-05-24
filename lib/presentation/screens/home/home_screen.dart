@@ -48,6 +48,12 @@ class _HomeScreenView extends StatelessWidget {
           subTitle: 'Un provider con estado personalizado',
           location: '/state-notifier-provider',
         ),
+
+        _CustomListTile(
+          title: 'Simple Name Provider',
+          subTitle: 'Un provider que genera un nombre aleatorio',
+          location: '/simple-name-provider',
+        ),
         
       ],
     );

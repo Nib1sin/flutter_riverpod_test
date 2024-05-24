@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_river/presentation/providers/todos_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -15,7 +16,7 @@ class TodosScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon( Icons.add ),
         onPressed: () {
-          
+           ref.read(todosProvider.notifier).addTodo();
         },
       ),
     );
@@ -29,16 +30,22 @@ class _TodosView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref ) {
 
+    final todos = ref.watch(todosProvider);
+
+
     return ListView.builder(
-      itemCount: 13,
+      itemCount: todos.length,
       itemBuilder: (context, index) {
         
+        final todo = todos[index];
 
         return SwitchListTile(
-          title: const Text( 'Juan Carlos' ),
-          value: (index % 2 == 0), // True o False 
-          onChanged: ( value ) {
-            
+          title: Text( todo.description ),
+          subtitle: Text( todo.completedAt.toString() ),
+          value: todo.done, // True o False 
+          onChanged: ( _ ) {
+            ref.read( todosProvider.notifier )
+              .toggleTodo(todo.id);
           }
         );
       },
